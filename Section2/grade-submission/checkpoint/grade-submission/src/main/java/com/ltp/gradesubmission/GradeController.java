@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 public class GradeController {
@@ -23,6 +22,12 @@ public class GradeController {
         return "form";
     }
 
+    @GetMapping("/grades")
+    public String getGrades(Model model) {
+        model.addAttribute("grades", studentGrades);
+        return "grades";
+    }
+
     @PostMapping("/handleSubmit")
     public String submitForm(Grade grade) {
         int index = getGradeIndex(grade.getId());
@@ -33,12 +38,6 @@ public class GradeController {
         }
 
         return "redirect:/grades";
-    }
-
-    @GetMapping("/grades")
-    public String getGrades(Model model) {
-        model.addAttribute("grades", studentGrades);
-        return "grades";
     }
 
     public int getGradeIndex(String id) {
